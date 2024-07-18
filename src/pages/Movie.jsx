@@ -3,7 +3,7 @@ import React from 'react'
 const Movie = () => {
   return (
     <main>
-      Movie
+      <div className='text-9xl'>Movieaaaaaaa1111</div>
     </main>
   )
 }
