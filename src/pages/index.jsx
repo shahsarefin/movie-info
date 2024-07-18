@@ -1,4 +1,5 @@
-export {Movie as Movie} from './Movie';
-export {Search as Search} from './Search';
-export {Movies as Movies} from './Movies';
-export {PageNotFound as PageNotFound} from './PageNotFound';
+// src/pages/index.js
+export { Movies } from './Movies';
+export { Movie } from './Movie';
+export { Search } from './Search';
+export { PageNotFound } from './PageNotFound';

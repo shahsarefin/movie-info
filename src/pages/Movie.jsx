@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Movie = () => {
+export const Movie = () => {
   return (
     <main>
       <div className='text-9xl'>Movieaaaaaaa1111</div>
@@ -8,4 +8,3 @@ const Movie = () => {
   )
 }
 
-export default Movie
