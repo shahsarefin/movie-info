@@ -1,19 +1,22 @@
-import { useState } from 'react'
-import {Header } from './components/Header';
-import {Footer} from './components/Footer';
-import {AllRoutes} from './routes/AllRoutes';
-import './App.css'
+// src/App.jsx
+
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import { Header, Footer } from './components';
+import { AllRoutes } from './routes/AllRoutes';
+import { theme } from './styles/theme';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <Header />
-      <AllRoutes />
-      <Footer />
-    </>
-  )
+    <ThemeProvider theme={theme}>
+      <>
+        <Header />
+        <AllRoutes />
+        <Footer />
+      </>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
