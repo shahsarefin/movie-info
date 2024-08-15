@@ -1,8 +1,15 @@
-// src/pages/MovieDetails/MovieDetails.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieDetails } from '../../services/api';
-import { Container, MovieTitle, MovieOverview, MoviePoster, MovieDetailsContainer } from './MovieDetails.styled';
+import {
+  Container,
+  MovieTitle,
+  MovieOverview,
+  MoviePoster,
+  MovieDetailsContainer,
+  MovieInfoWrapper,
+  MovieInfoTable,
+} from './MovieDetails.styled';
 
 export const MovieDetails = () => {
   const { id } = useParams();
@@ -25,12 +32,43 @@ export const MovieDetails = () => {
     <Container>
       <MovieDetailsContainer>
         <MoviePoster src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
-        <div>
+        <MovieInfoWrapper>
           <MovieTitle>{movie.title}</MovieTitle>
-          <p>Release Date: {movie.release_date}</p>
-          <p>Rating: {movie.vote_average}</p>
           <MovieOverview>{movie.overview}</MovieOverview>
-        </div>
+
+          <MovieInfoTable>
+            <tbody>
+              <tr>
+                <th>Release Date</th>
+                <td>{movie.release_date}</td>
+              </tr>
+              <tr>
+                <th>Rating</th>
+                <td>{movie.vote_average}</td>
+              </tr>
+              <tr>
+                <th>Genres</th>
+                <td>{movie.genres.map(genre => genre.name).join(', ')}</td>
+              </tr>
+              <tr>
+                <th>Runtime</th>
+                <td>{movie.runtime} minutes</td>
+              </tr>
+              <tr>
+                <th>Budget</th>
+                <td>${movie.budget.toLocaleString()}</td>
+              </tr>
+              <tr>
+                <th>Revenue</th>
+                <td>${movie.revenue.toLocaleString()}</td>
+              </tr>
+              <tr>
+                <th>Production Companies</th>
+                <td>{movie.production_companies.map(company => company.name).join(', ')}</td>
+              </tr>
+            </tbody>
+          </MovieInfoTable>
+        </MovieInfoWrapper>
       </MovieDetailsContainer>
     </Container>
   );

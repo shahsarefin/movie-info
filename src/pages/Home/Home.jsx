@@ -1,67 +1,137 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useFetchMovies } from '../../hooks/useFetchMovies';
 import { Link } from 'react-router-dom';
 import {
-  Header,
-  HeaderContent,
-  Title,
   Main,
   HeroSection,
   HeroTitle,
   HeroSubtitle,
-  Grid,
-  Card,
-  CardTitle,
+  FeaturedSection,
+  SectionTitle,
+  MovieGrid,
+  MovieCard,
+  MoviePoster,
+  MovieTitle,
   AboutSection,
   AboutTitle,
   AboutText,
-  Footer,
+  CTASection,
+  CTAButton,
 } from './Home.styled';
+import { Search } from '../Search/Search';
 
 export const Home = () => {
+  const popularMovies = useFetchMovies('popular').slice(0, 5);
+  const topRatedMovies = useFetchMovies('topRated').slice(0, 5);
+  const upcomingMovies = useFetchMovies('upcoming').slice(0, 5);
+  const [searchResults, setSearchResults] = useState([]);
+
   return (
-    <>
-      <Header>
-        <HeaderContent>
-          <Title>Movie.Info</Title>
-        </HeaderContent>
-      </Header>
-      <Main>
-        <HeroSection>
-          <HeroTitle>Welcome to Movie.Info</HeroTitle>
-          <HeroSubtitle>Your ultimate destination for movie information</HeroSubtitle>
-        </HeroSection>
+    <Main>
+      <HeroSection>
+        <HeroTitle>Discover Your Next Favorite Movie</HeroTitle>
+        <HeroSubtitle>
+          Explore thousands of films from classics to the latest releases
+        </HeroSubtitle>
+      </HeroSection>
 
-        <Grid>
-          <Card to="/popular" bg="#e53e3e" hoverBg="#c53030">
-            <CardTitle>Popular Movies</CardTitle>
-            <p>Discover what's trending in the world of cinema</p>
-          </Card>
-          <Card to="/top-rated" bg="#3182ce" hoverBg="#2c5282">
-            <CardTitle>Top Rated Movies</CardTitle>
-            <p>Explore critically acclaimed films of all time</p>
-          </Card>
-          <Card to="/upcoming" bg="#38a169" hoverBg="#2f855a">
-            <CardTitle>Upcoming Movies</CardTitle>
-            <p>Get a sneak peek at future blockbusters</p>
-          </Card>
-          <Card to="/all-movies" bg="#d69e2e" hoverBg="#b7791f">
-            <CardTitle>All Movies</CardTitle>
-            <p>Browse all available movies</p>
-          </Card>
-        </Grid>
+      <Search onSearch={setSearchResults} />
 
-        <AboutSection>
-          <AboutTitle>About Movie.Info</AboutTitle>
-          <AboutText>
-            Movie.Info is your go-to source for all things cinema. Whether you're looking for the latest box office hits, 
-            critically acclaimed masterpieces, or upcoming releases, we've got you covered. Dive in and explore the 
-            wonderful world of movies!
-          </AboutText>
-        </AboutSection>
-      </Main>
-      <Footer>
-        <p>&copy; 2023 Movie.Info. All rights reserved.</p>
-      </Footer>
-    </>
+      {searchResults.length > 0 && (
+        <FeaturedSection>
+          <SectionTitle>Search Results</SectionTitle>
+          <MovieGrid>
+            {searchResults.map((movie) => (
+              <MovieCard key={movie.id} to={`/movie/${movie.id}`}>
+                <MoviePoster
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={movie.title}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://via.placeholder.com/500x750?text=No+Image';
+                  }}
+                />
+                <MovieTitle>{movie.title}</MovieTitle>
+              </MovieCard>
+            ))}
+          </MovieGrid>
+        </FeaturedSection>
+      )}
+
+      <FeaturedSection>
+        <SectionTitle>Popular Movies</SectionTitle>
+        <MovieGrid>
+          {popularMovies.map((movie) => (
+            <MovieCard key={movie.id} to={`/movie/${movie.id}`}>
+              <MoviePoster
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/500x750?text=No+Image';
+                }}
+              />
+              <MovieTitle>{movie.title}</MovieTitle>
+            </MovieCard>
+          ))}
+        </MovieGrid>
+      </FeaturedSection>
+
+      <FeaturedSection>
+        <SectionTitle>Top Rated Movies</SectionTitle>
+        <MovieGrid>
+          {topRatedMovies.map((movie) => (
+            <MovieCard key={movie.id} to={`/movie/${movie.id}`}>
+              <MoviePoster
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/500x750?text=No+Image';
+                }}
+              />
+              <MovieTitle>{movie.title}</MovieTitle>
+            </MovieCard>
+          ))}
+        </MovieGrid>
+      </FeaturedSection>
+
+      <FeaturedSection>
+        <SectionTitle>Upcoming Movies</SectionTitle>
+        <MovieGrid>
+          {upcomingMovies.map((movie) => (
+            <MovieCard key={movie.id} to={`/movie/${movie.id}`}>
+              <MoviePoster
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/500x750?text=No+Image';
+                }}
+              />
+              <MovieTitle>{movie.title}</MovieTitle>
+            </MovieCard>
+          ))}
+        </MovieGrid>
+      </FeaturedSection>
+
+      <AboutSection>
+        <AboutTitle>About Movie.Info</AboutTitle>
+        <AboutText>
+          Movie.Info is your ultimate destination for all things cinema. We
+          provide comprehensive information about movies, from classics to the
+          latest releases. Whether you're a casual viewer or a film enthusiast,
+          our platform offers a rich database of movies, complete with ratings,
+          reviews, and recommendations.
+        </AboutText>
+      </AboutSection>
+
+      <CTASection>
+        <HeroTitle>Ready to dive into the world of movies?</HeroTitle>
+        <CTAButton as={Link} to="/popular">
+          Browse Popular Movies
+        </CTAButton>
+      </CTASection>
+    </Main>
   );
 };

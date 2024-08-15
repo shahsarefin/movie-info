@@ -2,6 +2,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+
 import { Home, Popular, TopRated, Upcoming, AllMovies, PageNotFound, MovieDetails, Search } from '../pages';
 
 export const AllRoutes = () => {
